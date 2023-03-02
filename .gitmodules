@@ -1,4 +1,4 @@
 [submodule "tsl"]
 	path = tsl
-	url = https://github.com/TorchSpatiotemporal/tsl.git
+	url = https://github.com/gdefe/tsl.git
 	branch = dev
