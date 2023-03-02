@@ -1,5 +1,6 @@
 # ignore all files in any directory named outputs
 outputs/
+**/outputs
 
 
 # tsl
