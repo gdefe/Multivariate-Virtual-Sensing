@@ -12,7 +12,7 @@ from tsl.datasets import MetrLA, PemsBay, AirQuality, ClimateCapitals
 from tsl.engines import Imputer
 from tsl.experiment import Experiment
 from tsl.metrics import torch as torch_metrics, numpy as numpy_metrics
-from tsl.nn.models import RNNImputerModel, BiRNNImputerModel, GRINModel, RNN_GrEN_ImputerModel
+from tsl.nn.models import RNNImputerModel, BiRNNImputerModel, GRINModel, MyImputerModel
 from tsl.ops.imputation import add_missing_values
 from tsl.transforms import MaskInput
 from tsl.utils.casting import torch_to_numpy
@@ -26,7 +26,7 @@ def get_model_class(model_str):
     elif model_str == 'grin':
         model = GRINModel
     elif model_str == 'mymodel':
-        model = RNN_GrEN_ImputerModel
+        model = MyImputerModel
     else:
         raise NotImplementedError(f'Model "{model_str}" not available.')
     return model
@@ -214,9 +214,3 @@ if __name__ == '__main__':
     exp = Experiment(run_fn=run_imputation, config_path='config', config_name='test')
     res = exp.run()
     logger.info(res)
-    
-    
-    
-# exp = Experiment(run_fn=run_imputation, config_path='config', config_name='test')
-# res = exp.run()
-# logger.info(res)

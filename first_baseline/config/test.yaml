@@ -15,29 +15,29 @@ impute_only_missing: False
 warm_up_steps: 0
 
 #### Dataset params ###########################################################
-# dataset:
-#    name: la
-#    root_dir: '../../data/MetrLA'
-#    splitting:
-#      val_len: 0.1
-#      test_len: 0.2
-#    connectivity:
-#      method: distance
-#      threshold: 0.1
-#      include_self: False
-#      layout: edge_index
-  
-dataset:    
-    name: climateHourly    # climateHourly
-    root_dir: '../../data/NASA_data'
+dataset:
+    name: la
+    root_dir: '../../data/MetrLA'
     splitting:
       val_len: 0.1
       test_len: 0.2
     connectivity:
-        method: 'full'
-      # threshold: 0.1
-      # include_self: False
-        layout: 'dense'
+      method: distance
+      threshold: 0.1
+      include_self: False
+      layout: edge_index
+  
+# dataset:    
+#     name: climateHourly    # climateHourly
+#     root_dir: '../../data/NASA_data'
+#     splitting:
+#       val_len: 0.1
+#       test_len: 0.2
+#     connectivity:
+#         method: 'full'
+#       # threshold: 0.1
+#       # include_self: False
+#         layout: 'dense'
 
 #### Windowing params #########################################################
 window: 24
@@ -50,28 +50,28 @@ stride: 1
 #     hidden_size: 8
 #     ff_size: 16
 #     merge_mode: mean
-# model:
-#   name: rnni
-#   hparams:
-#     hidden_size: 64
-#     cell: 'gru'
-#     concat_mask: True
-#     detach_input: False
-#     fully_connected: False
-#     state_init: 'zero'
-    
 model:
-    name: mymodel
-    hparams:
-        hidden_size: 16
-        embedding_size: 16
-        n_conv_layers: 2
-        cell: 'gru'
-        concat_mask: True
-        fully_connected: False
-        # n_nodes: 207
-        detach_input: False
-        state_init: 'zero'
+  name: rnni
+  hparams:
+    hidden_size: 64
+    cell: 'gru'
+    concat_mask: True
+    detach_input: False
+    fully_connected: False
+    state_init: 'zero'
+    
+# model:
+#     name: mymodel
+#     hparams:
+#         hidden_size: 16
+#         embedding_size: 16
+#         n_conv_layers: 2
+#         cell: 'gru'
+#         concat_mask: True
+#         fully_connected: False
+#         # n_nodes: 207
+#         detach_input: False
+#         state_init: 'zero'
            
 
 
