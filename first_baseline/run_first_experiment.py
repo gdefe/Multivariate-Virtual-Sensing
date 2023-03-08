@@ -169,11 +169,12 @@ def run_imputation(cfg: DictConfig):
         monitor='val_mae',
         mode='min',
     )
-
+    
     trainer = Trainer(max_epochs=cfg.epochs,
                       default_root_dir=cfg.run.dir,
                       logger=exp_logger,
-                      gpus=1 if torch.cuda.is_available() else None,
+                      accelerator='gpu' if torch.cuda.is_available() else None,
+                      devices=1,
                       gradient_clip_val=cfg.grad_clip_val,
                       callbacks=[early_stop_callback, checkpoint_callback])
 
