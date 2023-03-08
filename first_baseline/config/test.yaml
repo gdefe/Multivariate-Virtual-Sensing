@@ -1,8 +1,16 @@
+#### Experiment params ########################################################
+hydra:
+  run:
+    dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+
 seed: 1234
-workers: 10
-#wandb:
-#  project: sandbox
-#  offline: False
+workers: 0
+wandb:
+  project: Virtual-Sensing-Multivariate
+  offline: False
+  save_dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+#  experimet:
+#      entity: gdefe 
 
 #### Imputation params ########################################################
 p_fault: 0.0015
@@ -50,7 +58,8 @@ model:
     hidden_size: 64
     ff_size: 64
     kernel_size: 2
-    merge_mode: mlp
+    merge_mode: mean
+    
 # model:
 #   name: rnni
 #   hparams:
@@ -77,8 +86,9 @@ model:
 
 
 #### Training params ##########################################################
-epochs: 300
-patience: 40
+epochs: 100     # 300
+patience: 40  # 40
+batch_per_epoch: 160
 batch_size: 32
 grad_clip_val: 5
 scale_target: True
