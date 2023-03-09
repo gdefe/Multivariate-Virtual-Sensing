@@ -1,7 +1,7 @@
 #### Experiment params ########################################################
 hydra:
   run:
-    name: grin-mlp-MetrLA
+    #name: grin-mlp-MetrLA
     dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
 
 seed: 1234

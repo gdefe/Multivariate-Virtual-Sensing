@@ -137,6 +137,7 @@ def run_imputation(cfg: DictConfig):
         optim_class=getattr(torch.optim, cfg.optimizer.name),
         optim_kwargs=dict(cfg.optimizer.hparams),
         loss_fn=loss_fn,
+        scale_target=cfg.scale_target,
         metrics=log_metrics,
         scheduler_class=scheduler_class,
         scheduler_kwargs=scheduler_kwargs,
