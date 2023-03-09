@@ -181,7 +181,8 @@ def run_imputation(cfg: DictConfig):
     )
     
     trainer = Trainer(max_epochs=cfg.epochs,
-                      limit_train_batches=cfg.batch_per_epoch,
+                      limit_train_batches=cfg.limit_train_batches,
+                      limit_val_batches=cfg.limit_val_batches,
                       default_root_dir=cfg.run.dir,
                       logger=exp_logger,
                       accelerator='gpu' if torch.cuda.is_available() else None,
