@@ -1,7 +1,8 @@
 # ignore all files in any directory named outputs
 outputs/
 **/outputs
-
+**/logs
+data/
 
 # tsl
 *.ipynb

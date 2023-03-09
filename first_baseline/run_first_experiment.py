@@ -61,25 +61,35 @@ def run_imputation(cfg: DictConfig):
     ########################################
     # data module                          #
     ########################################
+    # type MissingValuesMixin
+    # dataset.mask          --->  True = Valid              // False = Invalid
+    # dataset.eval_mask     --->  True = Valid and masked   // False = Invalid or unmasked      
+    # dataset.training_mask --->  True = Valid and unmasked // False = Invalid or masked        (mask & ~eval_mask)
     dataset = get_dataset(dataset_name=cfg.dataset.name,
                           root_dir=cfg.dataset.root_dir,
                           p_fault=cfg.get('p_fault'),
                           p_noise=cfg.get('p_noise'))
-
+    
     # get adjacency matrix
     adj = dataset.get_connectivity(**cfg.dataset.connectivity)
 
     # instantiate dataset
+    # type ImputationDataset(SpatioTemporalDataset)
+    # torch_dataset.mask       --->  True = Valid and masked   // False = Invalid or unmasked    (eval_mask)
+    # torch_dataset.input_mask --->  True = Valid and unmasked // False = Invalid or masked      (mask & ~eval_mask) 
     torch_dataset = ImputationDataset(target=dataset.dataframe(),
                                       eval_mask=dataset.eval_mask,
                                       input_mask=dataset.training_mask,
                                       transform=MaskInput(),
                                       connectivity=adj,
                                       window=cfg.window,
-                                      stride=cfg.stride)
-
+                                      stride=cfg.stride,
+                                      window_lag=cfg.window_lag,
+                                      horizon_lag=cfg.horizon_lag)
+    
+    # norm every channel independently across time and nodes
     scalers = {
-        'target': StandardScaler(axis=(0, 1))
+        'target': StandardScaler(axis=(0, 1))     # t, n
     }
 
     dm = SpatioTemporalDataModule(

@@ -1,14 +1,14 @@
 #### Experiment params ########################################################
-hydra:
-  run:
-    dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+# hydra:
+#   run:
+#     dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
 
 seed: 1234
 workers: 0
-wandb:
-  project: Virtual-Sensing-Multivariate
-  offline: False
-  save_dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+# wandb:
+#   project: Virtual-Sensing-Multivariate
+#   offline: False
+#   save_dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
 #  experimet:
 #      entity: gdefe 
 
@@ -42,14 +42,16 @@ dataset:
 #       val_len: 0.1
 #       test_len: 0.2
 #     connectivity:
-#         method: 'full'
+#         method: full
 #       # threshold: 0.1
 #       # include_self: False
-#         layout: 'dense'
+#         layout: dense
 
 #### Windowing params #########################################################
 window: 24
 stride: 1
+window_lag:1
+horizon_lag:1
 
 #### Model params #############################################################
 model:
