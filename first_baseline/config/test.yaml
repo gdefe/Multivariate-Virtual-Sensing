@@ -1,17 +1,17 @@
 #### Experiment params ########################################################
-hydra:
-  run:
+# hydra:
+   # run:
     #name: grin-mlp-MetrLA
-    dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    # dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
 
 seed: 1234
 workers: 0
-wandb:
-  project: Virtual-Sensing-Multivariate
-  offline: False
-  save_dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
-  experimet:
-      entity: gdefe 
+# wandb:
+#   project: Virtual-Sensing-Multivariate
+#   offline: False
+#   save_dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+#   experimet:
+#       entity: gdefe 
 
 #### Imputation params ########################################################
 p_fault: 0.0015
@@ -37,7 +37,7 @@ dataset:
       layout: edge_index
   
 # dataset:    
-#     name: climateHourly    # climateHourly
+#     name: climateDaily    # climateHourly
 #     root_dir: '../data/NASA_data'
 #     splitting:
 #       val_len: 0.1
@@ -45,7 +45,7 @@ dataset:
 #     connectivity:
 #         method: full
 #       # threshold: 0.1
-#       # include_self: False
+#         include_self: True
 #         layout: dense
 
 #### Windowing params #########################################################
@@ -55,13 +55,13 @@ window_lag: 1
 horizon_lag: 1
 
 #### Model params #############################################################
-model:
-  name: grin
-  hparams:
-    hidden_size: 64
-    ff_size: 64
-    kernel_size: 2
-    merge_mode: mlp
+# model:
+#   name: grin
+#   hparams:
+#     hidden_size: 64
+#     ff_size: 64
+#     kernel_size: 2
+#     merge_mode: mlp
     
 # model:
 #   name: rnni
@@ -73,18 +73,18 @@ model:
 #     fully_connected: False
 #     state_init: 'zero'
     
-# model:
-#     name: mymodel
-#     hparams:
-#         hidden_size: 16
-#         embedding_size: 16
-#         n_conv_layers: 2
-#         cell: 'gru'
-#         concat_mask: True
-#         fully_connected: False
-#         # n_nodes: 207
-#         detach_input: False
-#         state_init: 'zero'
+model:
+    name: mymodel
+    hparams:
+        hidden_size: 16
+        embedding_size: 16
+        n_conv_layers: 2
+        cell: 'gru'
+        concat_mask: True
+        fully_connected: False
+        # n_nodes: 207
+        detach_input: False
+        state_init: 'zero'
            
 
 
