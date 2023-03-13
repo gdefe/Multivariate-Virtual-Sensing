@@ -32,7 +32,8 @@ def get_model_class(model_str):
     return model
 
 
-def get_dataset(dataset_name: str, root_dir=None, p_fault=0., p_noise=0.):
+def get_dataset(dataset_name: str, root_dir=None, p_fault=0., p_noise=0., p_virtual=0., 
+                simultaneous_fault=False):
     if dataset_name.startswith('air'):
         return AirQuality(impute_nans=True, root_dir=root_dir, 
                           small=dataset_name[3:] == '36')
@@ -44,15 +45,18 @@ def get_dataset(dataset_name: str, root_dir=None, p_fault=0., p_noise=0.):
         dataset_name = dataset_name[:-6]
     if dataset_name == 'la':
         return add_missing_values(MetrLA(root=root_dir), 
-                                  p_fault=p_fault, p_noise=p_noise,
+                                  p_fault=p_fault, p_noise=p_noise, p_virtual=p_virtual,
+                                  simultaneous_fault = simultaneous_fault,
                                   min_seq=12, max_seq=12 * 4, seed=9101112)
     if dataset_name == 'bay':
         return add_missing_values(PemsBay(root=root_dir), 
-                                  p_fault=p_fault, p_noise=p_noise,
+                                  p_fault=p_fault, p_noise=p_noise, p_virtual=p_virtual,
+                                  simultaneous_fault = simultaneous_fault,
                                   min_seq=12, max_seq=12 * 4, seed=56789)
     if 'climate' in dataset_name:
         return add_missing_values(ClimateCapitals(name=dataset_name, root=root_dir), 
-                                  p_fault=p_fault, p_noise=p_noise,
+                                  p_fault=p_fault, p_noise=p_noise, p_virtual=p_virtual,
+                                  simultaneous_fault = simultaneous_fault,
                                   min_seq=12, max_seq=12 * 4, seed=12345)
     raise ValueError(f"Dataset {dataset_name} not available in this setting.")
 
@@ -68,7 +72,9 @@ def run_imputation(cfg: DictConfig):
     dataset = get_dataset(dataset_name=cfg.dataset.name,
                           root_dir=cfg.dataset.root_dir,
                           p_fault=cfg.get('p_fault'),
-                          p_noise=cfg.get('p_noise'))
+                          p_noise=cfg.get('p_noise'),
+                          p_virtual=cfg.get('p_virtual'),
+                          simultaneous_fault=cfg.simultaneous_fault)
     
     # get adjacency matrix
     adj = dataset.get_connectivity(**cfg.dataset.connectivity)

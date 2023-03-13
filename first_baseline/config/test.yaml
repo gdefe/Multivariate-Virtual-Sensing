@@ -1,21 +1,23 @@
 #### Experiment params ########################################################
-# hydra:
-   # run:
+hydra:
+    run:
     #name: grin-mlp-MetrLA
-    # dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
 
 seed: 1234
 workers: 0
-# wandb:
-#   project: Virtual-Sensing-Multivariate
-#   offline: False
-#   save_dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
-#   experimet:
-#       entity: gdefe 
+wandb:
+  project: Virtual-Sensing-Multivariate
+  offline: False
+  save_dir: logs/imputation/${model.name}/${now:%Y-%m-%d}/${now:%H-%M-%S}
+  experimet:
+      entity: gdefe 
 
 #### Imputation params ########################################################
 p_fault: 0.0015
 p_noise: 0.05
+p_virtual: 0.0015
+simultaneous_fault: False
 in_sample: False
 
 whiten_prob: 0.05
@@ -55,13 +57,13 @@ window_lag: 1
 horizon_lag: 1
 
 #### Model params #############################################################
-# model:
-#   name: grin
-#   hparams:
-#     hidden_size: 64
-#     ff_size: 64
-#     kernel_size: 2
-#     merge_mode: mlp
+model:
+  name: grin
+  hparams:
+    hidden_size: 64
+    ff_size: 64
+    kernel_size: 2
+    merge_mode: mlp
     
 # model:
 #   name: rnni
@@ -73,23 +75,23 @@ horizon_lag: 1
 #     fully_connected: False
 #     state_init: 'zero'
     
-model:
-    name: mymodel
-    hparams:
-        hidden_size: 16
-        embedding_size: 16
-        n_conv_layers: 2
-        cell: 'gru'
-        concat_mask: True
-        fully_connected: False
-        # n_nodes: 207
-        detach_input: False
-        state_init: 'zero'
+# model:
+#     name: mymodel
+#     hparams:
+#         hidden_size: 16
+#         embedding_size: 16
+#         n_conv_layers: 2
+#         cell: 'gru'
+#         concat_mask: True
+#         fully_connected: False
+#         # n_nodes: 207
+#         detach_input: False
+#         state_init: 'zero'
            
 
 
 #### Training params ##########################################################
-epochs: 100     # 300
+epochs: 5     # 300
 patience: 40  # 40
 limit_train_batches: 160   #160
 limit_val_batches: 1.0     #1.0
